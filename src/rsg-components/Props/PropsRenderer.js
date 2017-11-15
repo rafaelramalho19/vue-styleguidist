@@ -7,6 +7,7 @@ import Code from 'rsg-components/Code';
 import JsDoc from 'rsg-components/JsDoc';
 import Markdown from 'rsg-components/Markdown';
 import Name from 'rsg-components/Name';
+// import Schema from 'rsg-components/Schema';
 import Type from 'rsg-components/Type';
 import Text from 'rsg-components/Text';
 import Para from 'rsg-components/Para';
@@ -216,7 +217,11 @@ export const columns = [
 ];
 
 export default function PropsRenderer({ props }) {
-	return <Table columns={columns} rows={propsToArray(props)} getRowKey={getRowKey} />;
+	return (
+		<div>
+			<Table columns={columns} rows={propsToArray(props)} getRowKey={getRowKey} />
+		</div>
+	);
 }
 
 PropsRenderer.propTypes = {

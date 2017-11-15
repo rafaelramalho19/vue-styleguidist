@@ -9,5 +9,4 @@ module.exports = {
 	},
 	showUsage: true,
 	serverPort: 6062,
-	vuex: 'src/store/index.js',
 };
