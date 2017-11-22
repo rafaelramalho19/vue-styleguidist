@@ -10,8 +10,6 @@
 </template>
 
 <script>
-
-import loggerMixin from '../../mixins/loggerMixin';
 import schema from './Button.schema.js';
 
 /**
@@ -24,7 +22,6 @@ export default {
 		}
 	},
 	name: 'Button',
-	mixins: [loggerMixin],
 	// @schema: ./Button.schema.js
 	props: {
 		/**

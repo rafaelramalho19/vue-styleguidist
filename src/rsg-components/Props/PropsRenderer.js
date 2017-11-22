@@ -7,12 +7,14 @@ import Code from 'rsg-components/Code';
 import JsDoc from 'rsg-components/JsDoc';
 import Markdown from 'rsg-components/Markdown';
 import Name from 'rsg-components/Name';
-// import Schema from 'rsg-components/Schema';
 import Type from 'rsg-components/Type';
 import Text from 'rsg-components/Text';
 import Para from 'rsg-components/Para';
 import Table from 'rsg-components/Table';
 import map from 'lodash/map';
+import some from 'lodash/some';
+import forEach from 'lodash/forEach';
+import find from 'lodash/find';
 import { unquote, getType, showSpaces } from './util';
 
 function renderType(type) {
@@ -189,6 +191,13 @@ function renderTypeColumn(prop) {
 	return <Type>{renderType(getType(prop))}</Type>;
 }
 
+function renderNewColumn(caption) {
+	return function(prop) {
+		const column = find(prop.columns, column => column.caption === caption);
+		return <div>{column.description}</div>;
+	};
+}
+
 export function getRowKey(row) {
 	return row.name;
 }
@@ -217,9 +226,25 @@ export const columns = [
 ];
 
 export default function PropsRenderer({ props }) {
+	// vue-styleguidist
+	const columnsTable = [...columns];
+
+	// Extract new columns
+	const listNamesProps = Object.keys(props);
+	const firstProp = props[listNamesProps[0]];
+	if (firstProp && firstProp.columns) {
+		forEach(firstProp.columns, value => {
+			if (!some(columnsTable, { caption: value.caption })) {
+				columnsTable.push({
+					caption: value.caption,
+					render: renderNewColumn(value.caption),
+				});
+			}
+		});
+	}
 	return (
 		<div>
-			<Table columns={columns} rows={propsToArray(props)} getRowKey={getRowKey} />
+			<Table columns={columnsTable} rows={propsToArray(props)} getRowKey={getRowKey} />
 		</div>
 	);
 }
