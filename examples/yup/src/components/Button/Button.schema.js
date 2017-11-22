@@ -1,4 +1,4 @@
-import { object, string } from 'yup';
+const { object, string } = require('yup');
 
 const schema = object().shape({
 	color: string()
@@ -10,4 +10,4 @@ const schema = object().shape({
 	size: string().required(),
 });
 
-export default schema;
+module.exports = schema;
